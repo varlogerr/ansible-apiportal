@@ -14,3 +14,7 @@ db_cli_managed: no
 # Web server is required on API Portal host.
 # Defaults to `no`
 web_srv_managed: no
+# Manage PHP installation.
+# PHP is required on API Portal host.
+# Defaults to `no`
+php_managed: no

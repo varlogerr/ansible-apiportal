@@ -1,0 +1,4 @@
+---
+- name: install packages and modules
+  package: name="{{ php_packages }}" state=present
+  become: yes

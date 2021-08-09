@@ -11,4 +11,9 @@
       apply: { tags: web-srv }
     tags: [ web-srv ]
     when: web_srv_managed | default(False)
+  - include_role:
+      name: php
+      apply: { tags: php }
+    tags: [ php ]
+    when: (php_managed | default(False))
   roles: []

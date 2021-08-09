@@ -1,0 +1,21 @@
+---
+php_package: php
+php_modules:
+- cli
+- common
+- gd
+- intl
+- json
+- mbstring
+- mysqlnd
+- pdo
+- pecl-zip
+- xml
+# combined packages and modules. decomposed demo:
+# [a, b] | product([c, d]) => [[a, c], [a, d], [b, c], [b, d]]
+# [[a, c], [a, d], [b, c], [b, d]] | map('join') | list => [ac, ad, bc, bd]
+# with `php` and `php_modules` case it results in a list ['php-' + <module>, ...]
+php_packages: "{{ [ php_package + '-' ] | product(php_modules) | map('join') | list }}"
+# not used in the current role,
+# but can be used by subsequent roles
+php_ini_confdir: /etc

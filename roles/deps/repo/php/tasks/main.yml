@@ -1,0 +1,4 @@
+---
+- name: install
+  yum: name="@php:remi-{{ php_version }}" state=present
+  become: yes

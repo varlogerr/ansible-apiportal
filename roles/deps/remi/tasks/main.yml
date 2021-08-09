@@ -1,0 +1,21 @@
+---
+- block:
+  - name: install signature
+    rpm_key: key="{{ gpg_key }}" state=present
+    vars:
+      gpg_keys:
+        - https://rpms.remirepo.net/RPM-GPG-KEY-remi
+        - https://rpms.remirepo.net/RPM-GPG-KEY-remi2017
+        - https://rpms.remirepo.net/RPM-GPG-KEY-remi2018
+        - https://rpms.remirepo.net/RPM-GPG-KEY-remi2019
+        - https://rpms.remirepo.net/RPM-GPG-KEY-remi2020
+    loop: "{{ gpg_keys }}"
+    loop_control:
+      loop_var: gpg_key
+
+  - name: install packages
+    package: name="{{ dl_url }}" state=present
+    vars:
+      version: "{{ ansible_distribution_major_version }}"
+      dl_url: http://rpms.remirepo.net/enterprise/remi-release-{{ version }}.rpm
+  become: yes
