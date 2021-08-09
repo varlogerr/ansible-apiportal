@@ -1,0 +1,10 @@
+---
+web_srv_pkg:
+- httpd
+- mod_ssl
+web_srv_ports:
+- 80/tcp
+- 443/tcp
+# not used in the current role,
+# but can be used by subsequent roles
+web_srv_confd: /etc/httpd/conf.d

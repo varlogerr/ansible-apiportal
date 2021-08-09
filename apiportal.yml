@@ -6,4 +6,9 @@
       apply: { tags: db-cli }
     tags: [ db-cli ]
     when: db_cli_managed | default(False)
+  - include_role:
+      name: web-srv
+      apply: { tags: web-srv }
+    tags: [ web-srv ]
+    when: web_srv_managed | default(False)
   roles: []

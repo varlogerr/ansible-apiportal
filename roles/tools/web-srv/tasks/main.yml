@@ -1,0 +1,43 @@
+---
+# install
+- block:
+  - name: install packages
+    package: name="{{ web_srv_pkg }}" state=present
+
+  - name: start service
+    service: name=httpd state=started enabled=yes
+  become: yes
+
+# configure
+- block:
+  # required to connect to database server
+  - name: enable httpd_can_network_connect flag
+    ansible.posix.seboolean:
+      name: httpd_can_network_connect
+      state: yes
+      persistent: yes
+      ignore_selinux_state: yes
+
+  - name: enable ports
+    ansible.posix.firewalld:
+      port: "{{ port }}"
+      state: enabled
+      permanent: yes
+      immediate: yes
+      offline: yes
+    loop: "{{ web_srv_ports }}"
+    loop_control:
+      loop_var: port
+
+  - name: detect mpm configuration file
+    find: paths=/etc/httpd/conf.modules.d patterns='*-mpm.conf'
+    register: web_srv_mpm_conf_search
+
+  - name: configure mpm
+    copy: src=mpm.conf dest="{{ web_srv_mpm_conf_search.files[0].path }}"
+    register: web_srv_mpm_reconfigured
+
+  - name: restart service
+    service: name=httpd state=restarted
+    when: web_srv_mpm_reconfigured.changed
+  become: yes

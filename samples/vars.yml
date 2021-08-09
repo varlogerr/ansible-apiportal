@@ -10,3 +10,7 @@
 # Database client is required on API Portal host.
 # Defaults to `no`
 db_cli_managed: no
+# Manage web server installation.
+# Web server is required on API Portal host.
+# Defaults to `no`
+web_srv_managed: no
