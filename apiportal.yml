@@ -1,4 +1,9 @@
 ---
 - hosts: all
-  pre_tasks: []
+  pre_tasks:
+  - include_role:
+      name: db-cli
+      apply: { tags: db-cli }
+    tags: [ db-cli ]
+    when: db_cli_managed | default(False)
   roles: []

@@ -1,0 +1,4 @@
+---
+- name: install packages
+  package: name=MariaDB-client state=present
+  become: yes

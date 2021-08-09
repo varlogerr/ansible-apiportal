@@ -1,0 +1,12 @@
+---
+### SOFTWARE MANAGEMENT
+# In this section you can configure which software
+# will be managed by ansible. When you don't want
+# a piece of software to be managed by ansible, 
+# you should make sure that you have it installed
+# and configured properly yourself.
+###
+# Manage database client installation.
+# Database client is required on API Portal host.
+# Defaults to `no`
+db_cli_managed: no
