@@ -1,0 +1,7 @@
+---
+- name: install
+  get_url: url="{{ repo_url }}" dest="{{ repo_dest }}" force=yes
+  vars:
+    repo_url: https://download.docker.com/linux/centos/docker-ce.repo
+    repo_dest: /etc/yum.repos.d/docker-ce.repo
+  become: yes

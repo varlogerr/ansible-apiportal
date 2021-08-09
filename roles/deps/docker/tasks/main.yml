@@ -1,0 +1,16 @@
+---
+- block:
+  - name: install packages
+    package: name="{{ pkgs }}" state=present
+    vars:
+      pkgs:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+
+  - name: start service
+    service: name=docker state=started enabled=yes
+
+  - name: install python-docker
+    package: name=python3-docker state=present
+  become: yes

@@ -2,6 +2,11 @@
 - hosts: all
   pre_tasks:
   - include_role:
+      name: db-srv
+      apply: { tags: db-srv }
+    tags: [ db-srv ]
+    when: db_srv_managed | default(False)
+  - include_role:
       name: db-cli
       apply: { tags: db-cli }
     tags: [ db-cli ]

@@ -1,0 +1,7 @@
+---
+# for the full list of versions see
+# https://hub.docker.com/_/mariadb?tab=tags&ordering=last_updated
+db_srv_image: mariadb:10.6.3-focal
+db_srv_container: apiportal-db
+db_srv_data: /var/lib/mysql
+db_srv_port: 3306

@@ -10,11 +10,38 @@
 # Database client is required on API Portal host.
 # Defaults to `no`
 db_cli_managed: no
-# Manage web server installation.
-# Web server is required on API Portal host.
+# Manage database server installation.
+# Database can be installed on a different host
+# from API Portal.
 # Defaults to `no`
-web_srv_managed: no
+db_srv_managed: no
 # Manage PHP installation.
 # PHP is required on API Portal host.
 # Defaults to `no`
 php_managed: no
+# Manage web server installation.
+# Web server is required on API Portal host.
+# Defaults to `no`
+web_srv_managed: no
+
+### DATABASE SERVER CONFIGURATION
+# In this section you configure settings shared between
+# API Portal and database server. This configuration will
+# effect your database server only with `manage_db_srv: no`.
+# For example with `manage_db_srv: yes` will manage database
+# user and database. When `manage_db_srv: no` you'll need to
+# do it yourself.
+###
+# Database root user password.
+# Used only with `db_srv_managed: yes`.
+# Defaults to "changeme"
+db_root_pass: changeme
+# Database user.
+# Defaults to "apiportal"
+db_user: apiportal
+# Database password.
+# Defaults to "changeme"
+db_pass: changeme
+# The name of database to be used by API Portal.
+# Defaults to "apiportal"
+db_name: apiportal

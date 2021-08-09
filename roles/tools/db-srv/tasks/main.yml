@@ -1,0 +1,25 @@
+---
+- block:
+  - name: create storage
+    file: path="{{ db_srv_data }}" state=directory
+  
+  - name: start
+    docker_container:
+      container_default_behavior: compatibility
+      comparisons:
+        image: strict
+        env: strict
+      image: "{{ db_srv_image }}"
+      name: "{{ db_srv_container }}"
+      state: started
+      volumes:
+        - "{{ db_srv_data }}:/var/lib/mysql"
+      ports:
+        - "{{ db_srv_port }}:3306"
+      env:
+        MARIADB_ROOT_PASSWORD: "{{ db_root_pass }}"
+        MARIADB_DATABASE: "{{ db_name }}"
+        MARIADB_USER: "{{ db_user }}"
+        MARIADB_PASSWORD: "{{ db_pass }}"
+      restart_policy: unless-stopped
+  become: yes
