@@ -1,0 +1,50 @@
+---
+# related readings:
+# https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+# https://docs.ansible.com/ansible/latest/user_guide/become.html
+all:
+  children:
+    # host groups
+    apiportals:
+      hosts:
+        apiportal1:
+        apiportal2:
+        apiportal3:
+  hosts:
+    # host with sudo user
+    apiportal1:
+      # Target host
+      ansible_host: apiportal1.axway.com
+      # An existing sudoer on the host machine
+      ansible_user: some-sudoer
+      # Ansible user password
+      ansible_password: changeme
+      # Privilege escalation password for the ansible user
+      ansible_become_password: changeme
+      # Perform privileged action via sudo command
+      ansible_become_method: sudo
+    # host with non-sudo user
+    apiportal2:
+      # Target host
+      ansible_host: apiportal2.axway.com
+      # An existing user on the host machine
+      ansible_user: some-user
+      # Ansible user password
+      ansible_password: changeme
+      # Privilege escalation user must be root
+      ansible_become_user: root
+      # root user password
+      ansible_become_password: changeme
+      # Perform privileged action by switching user to root
+      ansible_become_method: su
+    # host with user accessed with ssh key,
+    # i.e. no need for `ansible_password`
+    apiportal3:
+      # Target host
+      ansible_host: apiportal3.axway.com
+      # An existing sudoer on the host machine
+      ansible_user: ssh-sudoer
+      # Privilege escalation (sudo) password for the ssh user 
+      ansible_become_password: changeme
+      # Perform privileged action via sudo command
+      ansible_become_method: sudo
