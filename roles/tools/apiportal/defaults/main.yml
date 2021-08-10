@@ -1,0 +1,9 @@
+---
+apiportal_installer: ""
+apiportal_upload_dir: /tmp/ansible-apiportal-install
+apiportal_upload_only: no
+apiportal_install_path: /opt/axway/apiportal/htdoc
+apiportal_db_host: 127.0.0.1
+apiportal_db_port: 3306
+apiportal_php_ini_dir: /etc
+apiportal_webserv_confd: /etc/httpd/conf.d

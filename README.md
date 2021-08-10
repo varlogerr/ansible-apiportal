@@ -27,24 +27,45 @@ cd portalbook
 # copy with your values
 cp samples/inv.yml inv/prod.yml
 vim inv/prod.yml # ... editing
+```
+
+Now it's time to configure your installation
+
+```bash
 # copy sample vars file to `host_vars` or `group_vars`
 # directory file with your host or hosts group name taken
 # from inventory file (for example for `apiportal` host) 
 # and fill the copy with your values
 cp samples/vars.yml host_vars/apiportal.yml
 vim host_vars/apiportal.yml # ... editing
+```
+
+Or using gen vars helper script
+
+```bash
+# generate vars file and fill it with your values
+./bin/gen-vars.sh -o host_vars/apiportal.yml
+vim host_vars/apiportal.yml # ... editing
+```
+
+Now you can copy the installer to the project and provision your target(s):
+
+```bash
 # copy apiportal installation package archive to 
 # `resources` directory. in order ansible to autodetect the
 # installation package archive in the `resources` dir it
-# must match the pattern `apiportal-*-install-*.tgz`
+# must match the pattern "apiportal-*install*.tgz"
 cp ~/Downloads/apiportal-installer.tgz ./resources/apiportal-rhel7-install-package.tgz
+# run the playbook using the inventory file
+ansible-playbook -i inv/prod.yml apiportal.yml
 ```
 
-Now you can provision your target(s)
+You can leave the installer outside of the project and point it with addition option:
 
 ```bash
 # run the playbook using the inventory file
-ansible-playbook -i inv/prod.yml apiportal.yml
+ansible-playbook -i inv/prod.yml apiportal.yml \
+  -e "apiportal_installer=${HOME}/Downloads/apiportal-installer.tgz"
 ```
 
 [ansible installation]: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html

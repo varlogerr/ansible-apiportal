@@ -6,6 +6,9 @@
 # you should make sure that you have it installed
 # and configured properly yourself.
 ###
+# Manage API Portal installation.
+# Defaults to `no`
+apiportal_managed: no
 # Manage database client installation.
 # Database client is required on API Portal host.
 # Defaults to `no`
@@ -45,3 +48,42 @@ db_pass: changeme
 # The name of database to be used by API Portal.
 # Defaults to "apiportal"
 db_name: apiportal
+
+### API PORTAL CONFIGURATION
+# API Portal installation settings
+###
+# Absolute path to API Portal installation package *.tgz file.
+# When blank will try to autodetect it in `resources` directory
+# by "apiportal-*install*.tgz" pattern
+apiportal_installer: ""
+# Remote directory on the target machine where to upload
+# the install scripts.
+# Defaults to "/tmp/ansible-apiportal-install"
+apiportal_upload_dir: /tmp/ansible-apiportal-install
+# Only upload installation package to the server without
+# installing it. All configuration options but sensitive ones
+# from the rest of configuration variables will be reflected
+# in `options.conf` file in the installaction package directory.
+# The installation package can be found in
+# `apiportal_upload_dir` directory on the server.
+# Defaults to `no`
+apiportal_upload_only: no
+# The install path for API Portal.
+# Defaults to "/opt/axway/apiportal/htdoc"
+apiportal_install_path: /opt/axway/apiportal/htdoc
+# Database host.
+# Defaults to "127.0.0.1"
+apiportal_db_host: 127.0.0.1
+# Database port.
+# Defaults to 3306
+apiportal_db_port: 3306
+# The directory where php.ini file is located.
+# With `php_managed: yes` the directory is automanaged
+# and the value below will be omitted.
+# Defaults to "/etc"
+apiportal_php_ini_dir: /etc
+# Web server conf.d directory.
+# With `web_srv_managed: yes` the directory is automanaged
+# and the value below will be omitted.
+# Defaults to "/etc/httpd/conf.d"
+apiportal_webserv_confd: /etc/httpd/conf.d

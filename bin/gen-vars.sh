@@ -5,7 +5,14 @@ THE_SCRIPT_DIR="$(cd "$(dirname "${THE_SCRIPT_PATH}")" &> /dev/null && pwd)"
 THE_SAMPLES_DIR="$(realpath "${THE_SCRIPT_DIR}/../samples")"
 
 print_help() {
-  echo "Copy vars file. Available options:"
+  while read -r l; do
+    [[ -n "${l}" ]] && echo "${l}"
+  done <<< "
+    Generage vars file. If you generate it into an existing vars file,
+    the values will not be changed to default ones.
+  "
+  echo
+  echo "Available options:"
 
   while read -r l; do
     [[ -n "${l}" ]] && echo "  ${l}"
@@ -13,6 +20,9 @@ print_help() {
     -o, --output    Output target file. Required.
     -h, -?, --help  Print this help.
   "
+
+  echo "Demo usage:"
+  echo "  $(basename "${THE_SCRIPT_PATH}") -o ./host_vars/apiportal.yml"
 }
 
 # collect options

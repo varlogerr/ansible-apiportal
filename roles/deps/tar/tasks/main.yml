@@ -1,0 +1,4 @@
+---
+- name: install packages
+  package: name=tar state=present
+  become: yes

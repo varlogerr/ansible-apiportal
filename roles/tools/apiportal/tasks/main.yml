@@ -1,0 +1,45 @@
+---
+- name: detect current installation
+  command: rpm -qa apiportal
+  register: apiportal_installation
+  changed_when: no
+
+- name: detect installer
+  find: paths="{{ playbook_dir }}/resources" patterns='apiportal-*install*.tgz'
+  register: apiportal_installer_search
+  delegate_to: localhost
+  when: apiportal_installer == ""
+
+- block:
+  - name: delete install directory
+    file: path="{{ apiportal_upload_dir }}" state=absent
+
+  - name: create install directory
+    file: path="{{ apiportal_upload_dir }}" state=directory
+
+  - name: upload install scripts
+    unarchive:
+      src: "{{ apiportal_installer | default(apiportal_installer_search.files[0].path, true) }}"
+      dest: "{{ apiportal_upload_dir }}"
+
+  - name: upload options file
+    template:
+      src: options.conf
+      dest: "{{ apiportal_upload_dir }}/options.conf"
+      mode: 0400
+  become: yes
+  when: (apiportal_installation.stdout_lines | length) < 1
+    or  apiportal_upload_only
+
+- block:
+  - name: install
+    command: ./apiportal_install.sh --optionfile ./options.conf --mysql-password {{ db_pass }}
+    args:
+      chdir: "{{ apiportal_upload_dir }}"
+
+  - name: delete install directory
+    file: path="{{ apiportal_upload_dir }}" state=absent
+  become: yes
+  when:
+  - (apiportal_installation.stdout_lines | length) < 1
+  - not apiportal_upload_only

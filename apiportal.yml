@@ -21,4 +21,7 @@
       apply: { tags: php }
     tags: [ php ]
     when: (php_managed | default(False))
-  roles: []
+  roles:
+  - name: apiportal
+    tags: ['apiportal']
+    when: (apiportal_managed | default(False))
