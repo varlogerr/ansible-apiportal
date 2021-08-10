@@ -1,5 +1,2 @@
 ---
 db_root_pass: changeme
-db_user: apiportal
-db_pass: changeme
-db_name: apiportal
