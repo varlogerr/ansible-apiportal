@@ -19,7 +19,7 @@
       env:
         MARIADB_ROOT_PASSWORD: "{{ db_root_pass }}"
         MARIADB_DATABASE: "{{ db_name }}"
-        MARIADB_USER: "{{ db_user }}"
-        MARIADB_PASSWORD: "{{ db_pass }}"
+        MARIADB_USER: "{{ db_user == 'root' | ternary(omit, db_user) }}"
+        MARIADB_PASSWORD: "{{ db_user == 'root' | ternary(omit, db_pass) }}"
       restart_policy: unless-stopped
   become: yes
