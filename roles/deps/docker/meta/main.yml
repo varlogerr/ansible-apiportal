@@ -1,3 +1,4 @@
 ---
 dependencies:
+- epel-release # for python3-docker package
 - repo/docker
