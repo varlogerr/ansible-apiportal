@@ -20,7 +20,7 @@ Login to your ansible control machine and follow the code snippets.
 # replace <ansible-apiportal repo url> with the actual repo
 # url, clone the repo to some directory (for example
 # portalbook) and cd to there
-git clone <ansible-apiportal url> portalbook
+git clone <ansible-apiportal repo url> portalbook
 cd portalbook
 # copy sample inventory file to `inv` directory file with
 # some meaningful name (for example prod.yml) and fill the
