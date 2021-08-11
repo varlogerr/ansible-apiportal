@@ -4,7 +4,15 @@
 
 * version 8.* of CentOS / Alma Linux / Rocky Linux
 * python3 (`dnf install python3`)
-* TODO: create sudo user
+* create sudo user (optional if you want to offload ansible tasks to a system user):
+  ```bash
+  # create control user, for example "ansible"
+  sudo useradd -rms /bin/bash ansible
+  # make control user sudoer
+  sudo usermod -aG wheel ansible
+  # give him a password
+  sudo passwd ansible
+  ```
 
 ### Ansible control machine
 
