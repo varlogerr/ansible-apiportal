@@ -1,2 +1,3 @@
 ---
-db_root_pass: changeme
+db_srv_root_pass: changeme
+db_srv_root_host: localhost

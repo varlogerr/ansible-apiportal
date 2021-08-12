@@ -28,33 +28,44 @@ php_managed: no
 web_srv_managed: no
 
 ### DATABASE SERVER CONFIGURATION
-# In this section you configure settings shared between
-# API Portal and database server. This configuration will
-# effect your database server only with `manage_db_srv: no`.
-# For example with `manage_db_srv: yes` will manage database
-# user and database. When `manage_db_srv: no` you'll need to
+# In this section you configure database server settings.
+# This configuration will effect your database server only
+# with `manage_db_srv: yes`. For example with
+# `manage_db_srv: yes` will manage database users and
+# databases. When `manage_db_srv: no` you'll need to
 # do it yourself.
 ###
 # Database root user password.
 # Used only with `db_srv_managed: yes`.
 # Defaults to "changeme"
-db_root_pass: changeme
-# Database user.
-# Defaults to "apiportal"
-db_user: apiportal
-# Database password.
-# Defaults to "changeme"
-db_pass: changeme
-# The name of database to be used by API Portal.
-# Defaults to "apiportal"
-db_name: apiportal
+db_srv_root_pass: changeme
+# The 'host' part of the database root username (for example '%' for any host).
+# Defaults to "localhost"
+db_srv_root_host: localhost
+# List of database users in format. Demo
+# db_srv_users:
+#   # user name. Required
+# - name: joomla
+#   # user password. Optional, defaults to "changeme"
+#   pass: changeme
+#   # user's database.
+#   # If the same user repeated in multiple entries for
+#   # different database names, they will be appended to
+#   # the user, not overriden.
+#   # Optional, defaults to "apiportal"
+#   dbname: apiportal
+#   # the user's host. Optional, defaults to "localhost"
+#   host: localhost
+# Defaults to `[]`
+db_srv_users: []
 
 ### API PORTAL CONFIGURATION
 # API Portal installation settings
 ###
-# Absolute path to API Portal installation package *.tgz file.
-# When blank will try to autodetect it in `resources` directory
-# by "apiportal-*install*.tgz" pattern
+# Absolute path to API Portal installation package *.tgz file
+# On the ansible control machine. When blank or undefined
+# will try to autodetect it in `resources` directory by
+# "apiportal-*install*.tgz" pattern
 apiportal_installer: ""
 # Remote directory on the target machine where to upload
 # the install scripts.
@@ -71,12 +82,21 @@ apiportal_upload_only: no
 # The install path for API Portal.
 # Defaults to "/opt/axway/apiportal/htdoc"
 apiportal_install_path: /opt/axway/apiportal/htdoc
-# Database host.
+# Database server host.
 # Defaults to "127.0.0.1"
 apiportal_db_host: 127.0.0.1
 # Database port.
 # Defaults to 3306
 apiportal_db_port: 3306
+# Database name.
+# Defaults to "apiportal"
+apiportal_db_name: apiportal
+# Database user.
+# Defaults to "apiportal"
+apiportal_db_user: apiportal
+# Database password.
+# Defaults to "changeme"
+apiportal_db_pass: changeme
 # The directory where php.ini file is located.
 # With `php_managed: yes` the directory is automanaged
 # and the value below will be omitted.

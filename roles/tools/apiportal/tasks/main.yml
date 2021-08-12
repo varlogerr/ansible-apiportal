@@ -28,14 +28,14 @@
       dest: "{{ apiportal_upload_dir }}/options.conf"
       mode: 0400
   become: yes
-  when: (apiportal_installation.stdout_lines | length) < 1
-    or  apiportal_upload_only
+  when: (apiportal_installation.stdout_lines | length) < 1 or apiportal_upload_only
 
 - block:
   - name: install
-    command: ./apiportal_install.sh --optionfile ./options.conf --mysql-password {{ db_pass }}
+    command: ./apiportal_install.sh --optionfile ./options.conf --mysql-password {{ apiportal_db_pass }}
     args:
       chdir: "{{ apiportal_upload_dir }}"
+      creates: "{{ apiportal_install_path }}"
 
   - name: delete install directory
     file: path="{{ apiportal_upload_dir }}" state=absent

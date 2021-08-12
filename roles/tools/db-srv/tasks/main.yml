@@ -1,25 +1,66 @@
 ---
+# install and start
 - block:
-  - name: create storage
-    file: path="{{ db_srv_data }}" state=directory
-  
-  - name: start
-    docker_container:
-      container_default_behavior: compatibility
-      comparisons:
-        image: strict
-        env: strict
-      image: "{{ db_srv_image }}"
-      name: "{{ db_srv_container }}"
-      state: started
-      volumes:
-        - "{{ db_srv_data }}:/var/lib/mysql"
-      ports:
-        - "{{ db_srv_port }}:3306"
-      env:
-        MARIADB_ROOT_PASSWORD: "{{ db_root_pass }}"
-        MARIADB_DATABASE: "{{ db_name }}"
-        MARIADB_USER: "{{ (db_user == 'root') | ternary(omit, db_user) }}"
-        MARIADB_PASSWORD: "{{ (db_user == 'root') | ternary(omit, db_pass) }}"
-      restart_policy: unless-stopped
+  - name: install packages
+    package: name=MariaDB-server state=present
+
+  - name: start service
+    service: name=mysql state=started enabled=yes
+
+  - name: enable ports
+    ansible.posix.firewalld:
+      port: "{{ port }}"
+      state: enabled
+      permanent: yes
+      immediate: yes
+      offline: yes
+    loop: "{{ db_srv_ports }}"
+    loop_control:
+      loop_var: port
   become: yes
+
+- name: configure root password
+  mysql_user:
+    login_user: root
+    login_password: "{{ db_srv_root_pass }}"
+    name: root
+    password: "{{ db_srv_root_pass }}"
+    check_implicit_admin: true
+    priv: "*.*:ALL,GRANT"
+    login_unix_socket: "{{ db_srv_socket }}"
+  become: yes
+
+- name: configure hosted root account
+  mysql_user:
+    login_user: root
+    login_password: "{{ db_srv_root_pass }}"
+    name: root
+    password: "{{ db_srv_root_pass }}"
+    host: "{{ db_srv_root_host }}"
+    priv: "*.*:ALL,GRANT"
+    login_unix_socket: "{{ db_srv_socket }}"
+
+- name: remove anonymous accounts
+  mysql_user:
+    login_user: root
+    login_password: "{{ db_srv_root_pass }}"
+    name: ''
+    host_all: yes
+    state: absent
+    login_unix_socket: "{{ db_srv_socket }}"
+
+- name: create users
+  mysql_user:
+    login_user: root
+    login_password: "{{ db_srv_root_pass }}"
+    name: "{{ conf.name }}"
+    password: "{{ conf.pass | default(db_srv_default_user_pass, true) }}"
+    host: "{{ conf.host | default(db_srv_default_user_host, true) }}"
+    priv: "{{ conf.dbname | default(db_srv_default_user_dbname, true) }}.*:ALL"
+    append_privs: yes
+    state: present
+    login_unix_socket: "{{ db_srv_socket }}"
+  loop: "{{ db_srv_users }}"
+  loop_control:
+    loop_var: conf
+    label: "{{ conf.name }}:{{ conf.host }}"

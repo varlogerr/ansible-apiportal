@@ -1,0 +1,4 @@
+---
+- name: install packages
+  package: name=python3-PyMySQL state=present
+  become: yes
