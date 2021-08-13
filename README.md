@@ -5,6 +5,7 @@
 * version 8.* of CentOS / Alma Linux / Rocky Linux
 * python3 (`dnf install python3`)
 * create sudo user (optional, if you want to offload ansible tasks to a system user):
+
   ```bash
   # create a control user, for example "ansible"
   sudo useradd -rms /bin/bash ansible
@@ -23,58 +24,74 @@
 
 **Note**: all the code snippets and instructions below are meant for UNIX-like OSes. In case you use something else translate them to your OS commands
 
-Login to your ansible control machine and follow the code snippets.
+Login to your ansible control machine.
 
-```bash
-# replace <ansible-apiportal repo url> with the actual repo
-# url, clone the repo to some directory (for example
-# portalbook) and cd to there
-git clone <ansible-apiportal repo url> portalbook
-cd portalbook
-# copy sample inventory file to `inv` directory file with
-# some meaningful name (for example prod.yml) and fill the
-# copy with your values
-cp samples/inv.yml inv/prod.yml
-vim inv/prod.yml # ... editing
-```
+1) Clone the repo:
 
-Now it's time to configure your installation
+    ```bash
+    # replace <ansible-apiportal repo url> with the actual
+    # repo url, clone the repo to some directory (for 
+    # example portalbook) and cd to there
+    git clone <ansible-apiportal repo url> portalbook
+    cd portalbook
+    ```
 
-```bash
-# copy sample vars file to `host_vars` or `group_vars`
-# directory file with your host or hosts group name taken
-# from inventory file (for example for `apiportal` host) 
-# and fill the copy with your values
-cp samples/vars.yml host_vars/apiportal.yml
-vim host_vars/apiportal.yml # ... editing
-```
+2) Initialize configuration directory with `init-conf.sh` script:
 
-Or using gen vars helper script
+    ```bash
+    # read init-conf.sh script help
+    ./bin/init-conf.sh -h
+    # initialize configuration directory with copying
+    # API Portal installation package there
+    ./bin/init-conf.sh ~/Downloads/apiporta-install.tgz
+    ```
 
-```bash
-# generate vars file and fill it with your values
-./bin/gen-vars.sh -o host_vars/apiportal.yml
-vim host_vars/apiportal.yml # ... editing
-```
+    Or manually:
 
-Now you can copy the installer to the project and provision your target(s):
+    ```bash
+    mkdir -p conf/{group_vars,host_vars,secrets}
+    cp samples/inv.yml conf
+    touch conf/group_vars/.gitignore
+    touch conf/host_vars/.gitignore
+    touch conf/secrets/.gitignore
+    cp ~/Downloads/apiporta-install.tgz ./conf
+    ```
 
-```bash
-# copy apiportal installation package archive to 
-# `resources` directory. in order ansible to autodetect the
-# installation package archive in the `resources` dir it
-# must match the pattern "apiportal-*install*.tgz"
-cp ~/Downloads/apiportal-installer.tgz ./resources/apiportal-rhel7-install-package.tgz
-# run the playbook using the inventory file
-ansible-playbook -i inv/prod.yml apiportal.yml
-```
+3) Configure deployment inventory:
 
-You can leave the installer outside of the project and point it with addition option:
+    ```bash
+    # edit inventory file
+    vim conf/inv.yml
+    ```
 
-```bash
-# run the playbook using the inventory file
-ansible-playbook -i inv/prod.yml apiportal.yml \
-  -e "apiportal_installer=${HOME}/Downloads/apiportal-installer.tgz"
-```
+4) Generate host vars file with `gen-vars.sh` script:
+
+    ```bash
+    # read gen-vars.sh script help
+    ./bin/gen-vars.sh -h
+    # generate vars file (given you ansible target
+    # host name is "apiportal")
+    ./bin/gen-vars.sh conf/host_vars/apiportal.yml
+    ```
+
+    Or manually:
+
+    ```bash
+    cp samples/vars.yml conf/host_vars/apiportal.yml
+    ```
+
+5) Configure installation settings:
+
+    ```bash
+    # edit variables file
+    vim conf/host_vars/apiportal.yml
+    ```
+
+6) Run ansible playbook
+
+    ```bash
+    # run the playbook using the inventory file
+    ansible-playbook -i conf/inv.yml apiportal.yml
+    ```
 
 [ansible installation]: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html

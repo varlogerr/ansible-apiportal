@@ -5,7 +5,7 @@
   changed_when: no
 
 - name: detect installer
-  find: paths="{{ playbook_dir }}/resources" patterns='apiportal-*install*.tgz'
+  find: paths="{{ playbook_dir }}/conf" patterns='apiportal-*install*.tgz' recurse=yes
   register: apiportal_installer_search
   delegate_to: localhost
   when: apiportal_installer == ""

@@ -30,19 +30,15 @@ web_srv_managed: no
 ### DATABASE SERVER CONFIGURATION
 # In this section you configure database server settings.
 # This configuration will effect your database server only
-# with `manage_db_srv: yes`. For example with
-# `manage_db_srv: yes` will manage database users and
-# databases. When `manage_db_srv: no` you'll need to
-# do it yourself.
+# with `manage_db_srv: yes`.
 ###
 # Database root user password.
-# Used only with `db_srv_managed: yes`.
 # Defaults to "changeme"
 db_srv_root_pass: changeme
 # The 'host' part of the database root username (for example '%' for any host).
 # Defaults to "localhost"
 db_srv_root_host: localhost
-# List of database users in format. Demo
+# List of database users. Demo:
 # db_srv_users:
 #   # user name. Required
 # - name: joomla
@@ -63,8 +59,8 @@ db_srv_users: []
 # API Portal installation settings
 ###
 # Absolute path to API Portal installation package *.tgz file
-# On the ansible control machine. When blank or undefined
-# will try to autodetect it in `resources` directory by
+# on the ansible control machine. When blank or undefined
+# will try to autodetect it in `conf` directory by
 # "apiportal-*install*.tgz" pattern
 apiportal_installer: ""
 # Remote directory on the target machine where to upload
