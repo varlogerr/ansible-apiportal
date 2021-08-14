@@ -38,7 +38,13 @@ Login to your ansible control machine.
     cd portalbook
     ```
 
-2) Initialize configuration directory with `init-conf.sh` script:
+2) Install required collections:
+
+    ```bash
+    ansible-galaxy collection install -r ./requirements.yml -p ./requirements
+    ```
+
+3) Initialize configuration directory with `init-conf.sh` script:
 
     ```bash
     # read init-conf.sh script help
@@ -59,14 +65,14 @@ Login to your ansible control machine.
     cp ~/Downloads/apiporta-install.tgz ./conf
     ```
 
-3) Configure deployment inventory:
+4) Configure deployment inventory:
 
     ```bash
     # edit inventory file
     vim conf/inv.yml
     ```
 
-4) Generate host vars file with `gen-vars.sh` script:
+5) Generate host vars file with `gen-vars.sh` script:
 
     ```bash
     # read gen-vars.sh script help
@@ -82,14 +88,14 @@ Login to your ansible control machine.
     cp samples/vars.yml conf/host_vars/apiportal.yml
     ```
 
-5) Configure installation settings:
+6) Configure installation settings:
 
     ```bash
     # edit variables file
     vim conf/host_vars/apiportal.yml
     ```
 
-6) Run ansible playbook
+7) Run ansible playbook
 
     ```bash
     # run the playbook using the inventory file

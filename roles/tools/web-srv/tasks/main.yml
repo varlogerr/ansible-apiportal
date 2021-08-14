@@ -12,14 +12,14 @@
 - block:
   # required to connect to database server
   - name: enable httpd_can_network_connect flag
-    ansible.posix.seboolean:
+    seboolean:
       name: httpd_can_network_connect
       state: yes
       persistent: yes
       ignore_selinux_state: yes
 
-  - name: enable ports
-    ansible.posix.firewalld:
+  - name: expose ports
+    firewalld:
       port: "{{ port }}"
       state: enabled
       permanent: yes

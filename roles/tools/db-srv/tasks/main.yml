@@ -7,8 +7,8 @@
   - name: start service
     service: name=mysql state=started enabled=yes
 
-  - name: enable ports
-    ansible.posix.firewalld:
+  - name: expose ports
+    firewalld:
       port: "{{ port }}"
       state: enabled
       permanent: yes
