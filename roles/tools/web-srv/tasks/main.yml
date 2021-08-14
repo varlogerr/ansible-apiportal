@@ -28,6 +28,7 @@
     loop: "{{ web_srv_ports }}"
     loop_control:
       loop_var: port
+    when: ansible_facts.services['firewalld.service'] is defined
 
   - name: detect mpm configuration file
     find: paths=/etc/httpd/conf.modules.d patterns='*-mpm.conf'
