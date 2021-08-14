@@ -1,5 +1,11 @@
 ## Requirements
 
+### Ansible control machine
+
+* ansible ([installation instructions][ansible installation])
+* (optional) if you plan to use `gen-vars.sh` tool `python` or `python3` should be in the PATH
+* (optional) if you plan to configure ansible to connect to target machines with username and password (not ssh keys), `sshpass` must be installed
+
 ### Target machines
 
 * version 8.* of CentOS / Alma Linux / Rocky Linux
@@ -15,12 +21,6 @@
   # give him a password
   sudo passwd ansible
   ```
-
-### Ansible control machine
-
-* ansible ([installation instructions][ansible installation])
-* (optional) if you plan to use `gen-vars.sh` tool `python` or `python3` should be in the PATH
-* (optional) if you plan to configure ansible to connect to target machines with username and password (not ssh keys), `sshpass` must be installed
 
 ## Usage
 
