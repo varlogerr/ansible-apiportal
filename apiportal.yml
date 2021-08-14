@@ -2,6 +2,8 @@
 - hosts: all
   pre_tasks:
   - include_role:
+      name: factum
+  - include_role:
       name: db-srv
       apply: { tags: db-srv }
     tags: [ db-srv ]
