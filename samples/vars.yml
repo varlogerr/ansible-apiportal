@@ -41,7 +41,7 @@ db_srv_root_host: localhost
 # List of database users. Demo:
 # db_srv_users:
 #   # user name. Required
-# - name: joomla
+# - name: apiportal
 #   # user password. Optional, defaults to "changeme"
 #   pass: changeme
 #   # user's database.
@@ -79,8 +79,8 @@ apiportal_upload_only: no
 # Defaults to "/opt/axway/apiportal/htdoc"
 apiportal_install_path: /opt/axway/apiportal/htdoc
 # Database server host.
-# Defaults to "127.0.0.1"
-apiportal_db_host: 127.0.0.1
+# Defaults to "localhost"
+apiportal_db_host: localhost
 # Database port.
 # Defaults to 3306
 apiportal_db_port: 3306
