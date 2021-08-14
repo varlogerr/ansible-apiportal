@@ -3,6 +3,7 @@
 ### Target machines
 
 * version 8.* of CentOS / Alma Linux / Rocky Linux
+* ssh server running (`sudo dnf install -y openssh-server && sudo systemctl enable --now sshd`)
 * python3 (`dnf install python3`)
 * create sudo user (optional, if you want to offload ansible tasks to a system user):
 
@@ -18,7 +19,8 @@
 ### Ansible control machine
 
 * ansible ([installation instructions][ansible installation])
-* (optional) if you plan to use `gen-vars.sh` tool python or python3 should be in the PATH
+* (optional) if you plan to use `gen-vars.sh` tool `python` or `python3` should be in the PATH
+* (optional) if you plan to configure ansible to connect to target machines with username and password (not ssh keys), `sshpass` must be installed
 
 ## Usage
 
