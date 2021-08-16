@@ -27,6 +27,7 @@ print_help() {
     [[ -n "${l}" ]] && echo "  ${l}"
   done <<< "
     --dry           Dry run flag. Output to stdout, no file writes will be done.
+    --comments      Generate with help commentaries.
     --format        Format existing variables. No new variables will be added.
     -h, -?, --help  Print this help.
   "
@@ -45,6 +46,7 @@ print_help() {
 
 is_dry=0
 do_format=0
+with_comments=0
 INVALID=()
 # collect options
 while [[ ${#} -gt 0 ]]; do
@@ -58,6 +60,9 @@ while [[ ${#} -gt 0 ]]; do
       ;;
     --format)
       do_format=1
+      ;;
+    --comments)
+      with_comments=1
       ;;
     -*)
       INVALID+=("${1}")
@@ -129,8 +134,17 @@ while IFS= read -r l; do
   [[ "${l}" == '-' ]] && continue
   grep -P '^\s+[^#]' <<< "${l}" > /dev/null && continue
 
+  # comment
+  if grep -P '^\s*#.*$' <<< "${l}" > /dev/null; then
+    if [[ ${with_comments} -eq 1 ]]; then
+      echo "${l}"
+    fi
+
+    continue
+  fi
+
   # if it's a comment or an empty line print it out directly
-  grep -P '^\s*(#.*)?$' <<< "${l}" > /dev/null && echo "${l}" && continue
+  grep -P '^\s*$' <<< "${l}" > /dev/null && echo "${l}" && continue
 
   # it's a variable if we hit this line
   var_name="$(grep -Po '^[^:]+' <<< "${l}")"
