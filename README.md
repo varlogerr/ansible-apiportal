@@ -59,6 +59,7 @@ Login to your ansible control machine.
     ```bash
     mkdir -p conf/{group_vars,host_vars,secrets}
     cp samples/inv.yml conf
+    cp samples/conf.gitignore conf/.gitignore
     touch conf/group_vars/.gitignore
     touch conf/host_vars/.gitignore
     touch conf/secrets/.gitignore

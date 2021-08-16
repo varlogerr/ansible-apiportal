@@ -34,8 +34,6 @@ print_help() {
   "
 }
 
-is_dry=0
-do_format=0
 INVALID=()
 # collect options
 while [[ ${#} -gt 0 ]]; do
@@ -71,6 +69,7 @@ if [[ ! -d "${THE_CONF_DIR}" ]]; then
   done
 
   cp "${THE_SAMPLES_DIR}/inv.yml" "${THE_CONF_DIR}"
+  cp "${THE_SAMPLES_DIR}/conf.gitignore" "${THE_CONF_DIR}/.gitignore"
 fi
 
 if [[ -n "${INSTALLER}" ]] && [[ -f "${INSTALLER}" ]]; then
