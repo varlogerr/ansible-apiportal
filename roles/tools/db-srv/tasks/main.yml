@@ -5,7 +5,7 @@
     package: name=MariaDB-server state=present
 
   - name: start service
-    service: name=mysql state=started enabled=yes
+    service: name=mysqld state=started enabled=yes
 
   - name: expose ports
     firewalld:

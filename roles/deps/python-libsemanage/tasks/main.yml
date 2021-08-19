@@ -1,4 +1,6 @@
 ---
 - name: install packages
-  package: name=python3-libsemanage state=present
+  package: name="{{ package_name }}" state=present
+  vars:
+    package_name: "{{ python_libsemanage.package_map['cent' + ansible_distribution_major_version] }}"
   become: yes

@@ -1,0 +1,11 @@
+---
+- name: install
+  ini_file:
+    path: /etc/yum.repos.d/remi-php{{ undotted_version }}.repo
+    section: remi-php{{ undotted_version }}
+    option: enabled
+    value: "1"
+  become: yes
+  vars:
+    split_version: "{{ (php_version | string).split('.') }}"
+    undotted_version: "{{ split_version[0] }}{{ split_version[1] }}"

@@ -8,9 +8,11 @@
 
 ### Target machines
 
-* version 8.* of CentOS / Alma Linux / Rocky Linux
+* CentOS 7 or version 8.* of CentOS / Alma Linux / Rocky Linux
 * ssh server running (`sudo dnf install -y openssh-server && sudo systemctl enable --now sshd`)
-* python3 (`dnf install python3`)
+* python
+  * python3 for CentOS 8 and its successors (`dnf install python3`). It will work without any additional configurations
+  * python (version 2) for CentOS 7 (`yum install python`). You will have to set the interpreter path with `ansible_python_interpreter` variable for individual or group of hosts
 * create sudo user (optional, if you want to offload ansible tasks to a system user):
 
   ```bash

@@ -1,4 +1,9 @@
 ---
 dependencies:
-- pymysql
+- python-mysqldb
+- python-pymysql
 - repo/mariadb
+
+collections:
+- ansible.posix
+- community.mysql

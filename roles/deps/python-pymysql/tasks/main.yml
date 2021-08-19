@@ -2,3 +2,4 @@
 - name: install packages
   package: name=python3-PyMySQL state=present
   become: yes
+  when: (ansible_distribution_major_version | int) >= 8

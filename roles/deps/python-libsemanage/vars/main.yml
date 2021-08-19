@@ -1,0 +1,8 @@
+---
+python_libsemanage:
+  package_map:
+    # distro major version to packages
+    cent7:
+    - libsemanage-python
+    cent8:
+    - python3-libsemanage
