@@ -17,8 +17,8 @@
     loop: "{{ db_srv_ports }}"
     loop_control:
       loop_var: port
+    when: ansible_facts.services['firewalld.service'] is defined
   become: yes
-  when: ansible_facts.services['firewalld.service'] is defined
 
 - name: configure root password
   mysql_user:

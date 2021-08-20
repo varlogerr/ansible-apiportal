@@ -10,6 +10,14 @@
   delegate_to: localhost
   when: apiportal_installer == ""
 
+- name: check db is up
+  wait_for:
+    host: "{{ apiportal_db_host }}"
+    port: "{{ apiportal_db_port }}"
+  when:
+  - (apiportal_installation.stdout_lines | length) < 1
+  - (not apiportal_upload_only)
+ 
 - block:
   - name: delete install directory
     file: path="{{ apiportal_upload_dir }}" state=absent
