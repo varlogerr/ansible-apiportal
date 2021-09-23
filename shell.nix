@@ -6,8 +6,11 @@ let
     export REQDIR=./requirements
     export PS1="[\[\033[1;32m\]nix-shell@\h \w\[\033[0m\]] "
     export PATH="$PATH:./bin"
-    ansible-galaxy collection install -r ./requirements.yml \
-      -p "$REQDIR" > /dev/null
+
+    if [[ -f ./requirements.yml ]]; then
+      ansible-galaxy collection install -r ./requirements.yml \
+        -p "$REQDIR" > /dev/null
+    fi
   '';
 
   pythonEnv = pkgs.python39.withPackages (pypkgs: with pypkgs; [
